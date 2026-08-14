@@ -1,0 +1,32 @@
+name: Restore question bank
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  restore:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Restore original question bank
+        run: |
+          git show da700ed07e7fcb74e86b41a458f5bdf0fd60a386:index.html > bank.html
+          test -s bank.html
+
+      - name: Commit restored bank
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add bank.html
+          git diff --cached --quiet && exit 0
+          git commit -m "Restore local question bank [skip ci]"
+          git push
