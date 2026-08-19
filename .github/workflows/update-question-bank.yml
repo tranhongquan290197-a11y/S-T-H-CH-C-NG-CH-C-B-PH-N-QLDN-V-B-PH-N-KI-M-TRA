@@ -16,7 +16,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Update answers and switch to 50 questions
         env:
-          ANSWERS: '[{"id":1,"answer":"A"},{"id":2,"answer":"B"},{"id":3,"answer":"C"},{"id":4,"answer":"D"}]'
+          ANSWERS: 'FULL_MAPPING'
         run: |
           python - <<'PY'
           import json, os, re
